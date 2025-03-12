@@ -61,14 +61,14 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
-//    // Example of a relationship (One to Many)
-//    public function posts()
-//    {
-//        return $this->hasMany(Post::class);
-//    }
-//
+    // Example of a relationship (One to Many)
+    public function rentals()
+    {
+        return $this->hasMany(Rental::class);
+    }
+
 //    // Example of a relationship (Many to Many)
-//    public function roles()
+//    public functio roles()
 //    {
 //        return $this->belongsToMany(Role::class);
 //    }

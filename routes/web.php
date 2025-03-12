@@ -1,22 +1,48 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TestController;
-use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\RentalController;
+use App\Models\Job;
 
-Route::get('/input', [TestController::class, 'index']);
-Route::get('/test', [TestController::class, 'test']);
+Route::prefix('book')->group(function() {
+    Route::get('/all', [BookController::class, 'all']);
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
-    Route::get('/expenses/create', [ExpenseController::class, 'create'])->name('expenses.create');
-    Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
-    Route::get('/expenses/{expense}/edit', [ExpenseController::class, 'edit'])->name('expenses.edit');
-    Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
-    Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
+});
+Route::prefix('customer')->group(function() {
+    Route::get('/all', [CustomerController::class, 'all']);
+    Route::get('/{id}/rentals', [CustomerController::class, 'rentals']);
+});
+Route::prefix('rental')->group(function() {
+    Route::get('/all', [RentalController::class, 'all']);
+
 });
 
-Route::get('/', function () {
-    return view('home');
-//    return 'Hello';
+
+Route::get('/', function() {
+    return view('welcome');
 });
+
+Route::get('/jobs', function() {
+    return view('jobs', [
+        'jobs' => Job::all()
+    ]);
+});
+
+Route::get('/jobs/{id}', function($id) {
+    $job = Job::find($id);
+
+    return view('job', [
+        'job' => $job
+    ]);
+});
+
+Route::get('/home', function() {
+    return view('welcome');
+});
+
+Route::get('/products', [UserController::class, 'index']);
+Route::get('/test', [NoteController::class, 'index']);
+
