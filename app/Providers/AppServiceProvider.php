@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Note;
-use App\Observers\NoteObserver;
+use App\Models\Rental;
+use App\Observers\RentalObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,6 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-//        Note::observe(NoteObserver::class);
+        Rental::observe(RentalObserver::class);
     }
 }
