@@ -13,8 +13,8 @@ class RentalObserver
      */
     public function created(Rental $rental): void
     {
-        Log::info("TRIEEIEINEINOANIOANSION!");
-        broadcast(new NewRental($rental));
+//        Log::info("broadcasted!");
+//        NewRental::dispatch($rental);
     }
 
     /**

@@ -10,18 +10,18 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
-class NewRental
+class RentalDelete
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
     public Rental $rental;
     /**
      * Create a new event instance.
      */
     public function __construct(Rental $rental)
     {
-        Log::info('new rental');
+        info('delete rental');
         $this->rental = $rental;
     }
 
@@ -32,24 +32,8 @@ class NewRental
      */
     public function broadcastOn(): array
     {
-        Log::info('broad on');
         return [
-            new PrivateChannel('new-rental'),
-        ];
-    }
-
-    public function broadcastAs(): string
-    {
-        Log::info('broad as');
-        return 'new-rent';
-    }
-
-    public function broadcastWith(): array
-    {
-        Log::info('broad with');
-        return [
-            'message' => 'Dữ liệu mới đã được tạo!',
-            'rental' => $this->rental,
+            new PrivateChannel('channel-name'),
         ];
     }
 }

@@ -5,7 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RentalController;
-use App\Models\Job;
+
 
 Route::prefix('book')->group(function() {
     Route::get('/all', [BookController::class, 'all']);
@@ -22,27 +22,14 @@ Route::prefix('rental')->group(function() {
 
 
 Route::get('/', function() {
-    return view('welcome');
+    return 1;
 });
 
-Route::get('/jobs', function() {
-    return view('jobs', [
-        'jobs' => Job::all()
-    ]);
-});
-
-Route::get('/jobs/{id}', function($id) {
-    $job = Job::find($id);
-
-    return view('job', [
-        'job' => $job
-    ]);
-});
 
 Route::get('/home', function() {
-    return view('welcome');
+    return "?";
+//    return view('home');
 });
 
 Route::get('/products', [UserController::class, 'index']);
-Route::get('/test', [NoteController::class, 'index']);
 
