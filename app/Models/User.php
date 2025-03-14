@@ -11,9 +11,6 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
-    protected $table = 'users';
-    protected $primaryKey = 'id';
-    public $timestamps = true;
 
     /**
      * The attributes that are mass assignable.
@@ -48,34 +45,4 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    // Example of an accessor
-    public function getFullNameAttribute()
-    {
-        return "{$this->first_name} {$this->last_name}";
-    }
-
-    // Example of a mutator
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
-
-    // Example of a relationship (One to Many)
-    public function rentals()
-    {
-        return $this->hasMany(Rental::class);
-    }
-
-//    // Example of a relationship (Many to Many)
-//    public functio roles()
-//    {
-//        return $this->belongsToMany(Role::class);
-//    }
-//
-//    // Example of a query scope
-//    public function scopeActive($query)
-//    {
-//        return $query->where('active', 1);
-//    }
 }
