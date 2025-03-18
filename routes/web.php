@@ -21,8 +21,17 @@ Route::prefix('rental')->group(function() {
 });
 
 
-Route::get('/', function() {
-    return 1;
+Route::get('/event', function () {
+    event(new \App\Events\NewRental('rental'));
+});
+
+Route::get('/', function () {
+    return view('listen');
+});
+
+Route::get('/test', function() {
+    event(new \App\Events\testingEvent("this is the message"));
+    return 'done';
 });
 
 

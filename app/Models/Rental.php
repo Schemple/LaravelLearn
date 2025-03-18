@@ -20,6 +20,7 @@ class Rental extends Model
         'deleted' => RentalDelete::class,
     ];
 
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);
