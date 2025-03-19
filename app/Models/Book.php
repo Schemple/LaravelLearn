@@ -9,9 +9,15 @@ class Book extends Model
 {
     /** @use HasFactory<\Database\Factories\BookFactory> */
     use HasFactory;
-    protected $fillable = ['title', 'author', 'published_year', 'stock'];
+    protected $fillable = ['title', 'author', 'published_year', 'stock', 'cover'];
+
+    public function getCoverUrlAttribute()
+    {
+        return $this->cover ? asset($this->cover) : asset('images/default-book.png');
+    }
+
     public function rental_detail()
     {
-        return $this->hasMany(Rental_detail::class);
+        return $this->hasMany(RentalDetail::class);
     }
 }

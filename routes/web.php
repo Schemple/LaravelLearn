@@ -9,8 +9,12 @@ use App\Http\Controllers\RentalController;
 
 Route::prefix('book')->group(function() {
     Route::get('/all', [BookController::class, 'all']);
-
 });
+
+Route::get('/book/add', function(){
+    return view('book.add');
+})->name('book.add');
+Route::post('/books/add', [BookController::class, 'add'])->name('books.store');
 Route::prefix('customer')->group(function() {
     Route::get('/all', [CustomerController::class, 'all']);
     Route::get('/{id}/rentals', [CustomerController::class, 'rentals']);
