@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Jobs\ProcessRentalOrder;
 
 class RentalController extends Controller
 {
@@ -22,5 +23,17 @@ class RentalController extends Controller
 //            ->whereDate('due_date', '<', $today)
 //            ->update(['status'=>'overdue']);
         return response()->json($data);
+    }
+
+    public function create(Request $request)
+    {
+        $data = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'book_id' => 'required|exists:books,id',
+            'rental_date' => 'required|date',
+            'return_date' => 'required|date|after:rental_date',
+        ]);
+        ProcessRentalOrder::dispatch($data);
+        return response()->json(['message' => 'Đơn thuê sách đã được tiếp nhận xử lý'], 201);
     }
 }
