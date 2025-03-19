@@ -52,6 +52,7 @@ class BookController extends Controller
             return response()->json(['message' => 'Không tìm thấy sách'], 404);
         }
         $book->update($request->validatedWithImage());
+        return response()->json(['message' => 'Cập nhật thành công'], 200);
     }
 
     /**
