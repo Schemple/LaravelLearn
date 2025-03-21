@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewBook;
 use App\Http\Requests\StoreBookRequest;
 use App\Jobs\AddBook;
 use App\Models\Book;
@@ -21,13 +22,14 @@ class BookController extends Controller
     public function store(StoreBookRequest $request)
     {
         $data = $request->validatedWithImage();
-        AddBook::dispatch($data);
+        dispatch(new AddBook($data));
         if ($request->is('api/*'))
         {
             return response()->json($data);
         }
-
-        return redirect()->route('home');
+        event(new NewBook("hahaha"));
+        return redirect()->back();
+//        return redirect()->route('home');
     }
 
     /**

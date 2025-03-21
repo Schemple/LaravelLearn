@@ -11,7 +11,7 @@ use App\Models\Book;
 
 class AddBook implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use InteractsWithQueue, Queueable, SerializesModels;
     protected $bookData;
     /**
      * Create a new job instance.

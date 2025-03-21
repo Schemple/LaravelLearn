@@ -2,7 +2,7 @@
 @section('title', 'Thêm sách')
 @section('content')
     <div class="container p-20 bg-gray-50">
-        <form class="bg-gray-50" action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
+        <form class="bg-gray-50" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="space-y-12">
                 <div class="border-b border-gray-900/10 pb-12">
@@ -94,6 +94,7 @@
             </div>
         </form>
     </div>
+{{--    @vite('resources/js/app.js')--}}
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let dropZone = document.getElementById("drop-zone");
@@ -101,6 +102,20 @@
             let previewImage = document.getElementById("preview-image");
             let previewMessage = document.getElementById("preview-message");
             let uploadIcon = document.getElementById("upload-icon");
+
+            // setTimeout(() => {
+            //     if (window.Echo) {
+            //         console.log("✅ Echo is now ready!");
+            //
+            //         window.Echo.channel('testChannel')
+            //             .listen('testingEvent', (e) => {
+            //                 console.log("Received event:", e);
+            //             });
+            //
+            //     } else {
+            //         console.error("❌ Echo is NOT ready!");
+            //     }
+            // }, 2000);
 
             // Ngăn chặn hành vi mặc định của trình duyệt khi kéo thả
             dropZone.addEventListener("dragover", function (e) {
