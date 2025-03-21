@@ -1,0 +1,5 @@
+Route::get('/test', function() {
+//    return view('learn.listen');
+    event(new \App\Events\testingEvent("this is the message"));
+    return 'done';
+});

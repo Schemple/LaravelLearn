@@ -10,10 +10,24 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
+    public function viewOne($id)
+    {
+        $book = Book::find($id);
+        if ($book){
+            return view('dashboard.book.show', ['book' => $book]);
+        }
+        return redirect()->route('404');
+    }
+
+    public function viewAdd()
+    {
+        return view('dashboard.book.add');
+    }
 
     public function index()
     {
-        return response()->json(Book::all(), 200);
+        return Book::all();
+//        return response()->json(Book::all(), 200);
     }
 
     /**
