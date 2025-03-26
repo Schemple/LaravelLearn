@@ -11,19 +11,21 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
+
 class NewRental implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public Rental $rental;
     public $message;
+
     /**
      * Create a new event instance.
      */
-    public function __construct($message)
+    public function __construct(Rental $rental, $message)
     {
-        info('new rental');
-//        Rental $rental
-//        $this->rental = $rental;
+//        info('new rental');
+        $this->rental = $rental;
+        $this->message = $message;
     }
 
     /**
@@ -35,14 +37,14 @@ class NewRental implements ShouldBroadcast
     {
         info('broad on');
         return [
-            new Channel('new-rental'),
+            new Channel('notify'),
         ];
     }
 
     public function broadcastAs(): string
     {
         info('broad as');
-        return 'new-rent';
+        return 'new.rental';
     }
 
     public function broadcastWith(): array

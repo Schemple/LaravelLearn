@@ -21,6 +21,7 @@ class UpdateOverdueRentals implements ShouldQueue
         //
     }
 
+
     /**
      * Execute the job.
      */

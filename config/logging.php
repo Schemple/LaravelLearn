@@ -58,6 +58,11 @@ return [
             'ignore_exceptions' => false,
         ],
 
+        'telescope' => [
+            'driver' => 'monolog',
+            'handler' => Laravel\Telescope\Watchers\LogWatcher::class,
+        ],
+
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),

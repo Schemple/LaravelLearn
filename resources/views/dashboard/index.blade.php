@@ -8,11 +8,11 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div class="bg-white p-4 rounded-lg shadow">
                 <h3 class="text-xl font-semibold">Sách Hiện Có</h3>
-                <p class="text-2xl">0</p>
+                <p class="text-2xl">{{ $totalBooks }}</p>
             </div>
             <div class="bg-white p-4 rounded-lg shadow">
                 <h3 class="text-xl font-semibold">Sách Đang Cho Thuê</h3>
-                <p class="text-2xl">0</p>
+                <p class="text-2xl">5003</p>
             </div>
             <div class="bg-white p-4 rounded-lg shadow">
                 <h3 class="text-xl font-semibold">Doanh Thu Hàng Tháng</h3>

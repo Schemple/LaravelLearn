@@ -4,83 +4,67 @@ namespace App\Http\Controllers;
 
 use App\Events\NewBook;
 use App\Http\Requests\StoreBookRequest;
+use App\Imports\BookImport;
 use App\Jobs\AddBook;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BookController extends Controller
 {
+    public function viewEdit($id){
+        $book = Book::find($id);
+        if ($book){
+            return view('books.edit',compact('book'));
+        }
+        return view('404');
+    }
+
+    public function importExcel(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xls,xlsx|max:2048',
+        ]);
+        try {
+            Excel::import(new BookImport, $request->file('file'));
+            return back()->with('success', 'Nhập dữ liệu sách thành công!');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Lỗi khi nhập file: ' . $e->getMessage()]);
+        }
+    }
+
+    public function viewImport()
+    {
+        return view('books.import');
+    }
+
+    public static function totalBooks()
+    {
+        $totalBooks = Book::sum('stock');
+        return $totalBooks;
+    }
+
     public function viewOne($id)
     {
         $book = Book::find($id);
-        if ($book){
-            return view('dashboard.book.show', ['book' => $book]);
+        if ($book) {
+            return view('books.show', ['book' => $book]);
         }
         return redirect()->route('404');
     }
 
-    public function viewAdd()
+    public function add()
     {
-        return view('dashboard.book.add');
+        return view('books.add');
     }
 
     public function index()
     {
-        return Book::all();
-//        return response()->json(Book::all(), 200);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreBookRequest $request)
-    {
-        $data = $request->validatedWithImage();
-        dispatch(new AddBook($data));
-        if ($request->is('api/*'))
-        {
-            return response()->json($data);
-        }
-        event(new NewBook("hahaha"));
-        return redirect()->back();
-//        return redirect()->route('home');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $book = Book::find($id);
-        if (!($book)) {
-            return response()->json(['message' => 'Không tìm thấy sách'], 404);
-        }
-        return response()->json($book, 200);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $book = Book::find($id);
-        if (!($book)) {
-            return response()->json(['message' => 'Không tìm thấy sách'], 404);
-        }
-        $book->update($request->validatedWithImage());
-        return response()->json(['message' => 'Cập nhật thành công'], 200);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        $book = Book::find($id);
-        if (!$book) {
-            return response()->json(['message' => 'Không tìm thấy sách'], 404);
-        }
-        $book->delete();
-        return response()->json(['message' => 'Xóa sách thành công'], 200);
+        $totalBooks = Book::count();
+        $books = Book::all()->take(10);
+        return view('books.index', [
+            'totalBooks' => $totalBooks,
+            'books' => $books
+        ]);
     }
 }

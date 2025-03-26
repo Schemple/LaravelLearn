@@ -21,13 +21,18 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
         $isLocal = $this->app->environment('local');
 
         Telescope::filter(function (IncomingEntry $entry) use ($isLocal) {
-            return $isLocal ||
-                   $entry->isReportableException() ||
-                   $entry->isFailedRequest() ||
-                   $entry->isFailedJob() ||
-                   $entry->isScheduledTask() ||
-                   $entry->hasMonitoredTag();
+            return $entry->type == 'log' ||
+                   $isLocal ||  // Nếu đang chạy trong môi trường local, mọi entry sẽ được hiển thị.
+                   $entry->isReportableException() || // Chỉ báo cáo các exception quan trọng.
+                   $entry->isFailedRequest() || //Chỉ theo dõi các request thất bại (lỗi 500, 403,...).
+                   $entry->isFailedJob() || // Chỉ ghi lại các job thất bại.
+                   $entry->isScheduledTask() || // Chỉ ghi lại task bị lỗi trong scheduler.
+                   $entry->hasMonitoredTag(); // Chỉ hiển thị log có gắn tag đặc biệt.
         });
+//        Telescope::filter(function (IncomingEntry $entry) use ($isLocal) {
+//            return true;
+//        });
+
     }
 
     /**

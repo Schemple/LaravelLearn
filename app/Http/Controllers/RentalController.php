@@ -8,9 +8,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\ProcessRentalOrder;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\RentalImport;
+use App\Http\Controllers\RentalDetailController;
 
 class RentalController extends Controller
 {
+    public function import()
+    {
+//        Excel::import(new RentalImport, 'orders.xlsx');
+        $collection = Excel::toCollection(new RentalImport, 'orders.xlsx');
+        dd($collection);
+//        return redirect('/')->with('success', 'All good!');
+    }
+
+    public static function rentedBooks()
+    {
+        return null;
+    }
     public function all()
     {
 //        $today = Carbon::today();

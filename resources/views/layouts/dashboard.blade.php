@@ -14,12 +14,12 @@
     <!-- Sidebar -->
     <div class="w-50 bg-gray-800 text-white">
         <div class="p-4">
-            <h1 class="text-2xl font-bold">Quản Lý Sách</h1>
+            <h1 class="text-2xl font-bold">Quản Lý Thuê Sách</h1>
         </div>
         <nav class="mt-5">
             <ul>
                 <li class="px-4 py-2 hover:bg-gray-700 {{ request('home') ? 'bg-gray-700' : ''}}"><a href="{{ route('home') }}">Trang Chủ</a></li>
-                <li class="px-4 py-2 hover:bg-gray-700 {{ request('book') ? 'bg-gray-700' : ''}}"><a href="{{ route('book') }}">Sách</a></li>
+                <li class="px-4 py-2 hover:bg-gray-700 {{ request('book') ? 'bg-gray-700' : ''}}"><a href="{{ route('book.index') }}">Sách</a></li>
                 <li class="px-4 py-2 hover:bg-gray-700 "><a href="{{ route('home') }}">Khách Hàng</a></li>
                 <li class="px-4 py-2 hover:bg-gray-700 "><a href="{{ route('home') }}">Doanh Thu</a></li>
                 <li class="px-4 py-2 hover:bg-gray-700 "><a href="{{ route('home') }}">Cài Đặt</a></li>

@@ -15,13 +15,14 @@ class NewBook implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $message;
-    public Book $rental;
+    public Book $book;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($message)
+    public function __construct(Book $book, $message)
     {
+        $this->book = $book;
         if ($message) {
             $this->message = $message;
         }
@@ -35,20 +36,21 @@ class NewBook implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('testChannel'),
+            new Channel('notify'),
         ];
     }
 
     public function broadcastAs(): string
     {
-        return 'book.added';
+        return 'new.book';
     }
 
     public function broadcastWith(): array
     {
         info('broad with');
         return [
-            'message' => 'Dữ liệu mới đã được tạo!',
+            'message' => 'Sách mới đã được thêm!',
+            ''
         ];
     }
 }
