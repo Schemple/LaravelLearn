@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\NewBook;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -28,5 +29,6 @@ class AddBook implements ShouldQueue
     {
         info('Job AddBook đang chạy');
         Book::create($this->bookData);
+        dispatch(new NewBook("Thêm sách thành công!"));
     }
 }

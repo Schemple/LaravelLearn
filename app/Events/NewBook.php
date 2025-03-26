@@ -15,14 +15,12 @@ class NewBook implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $message;
-    public Book $book;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(Book $book, $message)
+    public function __construct($message)
     {
-        $this->book = $book;
         if ($message) {
             $this->message = $message;
         }
@@ -50,7 +48,6 @@ class NewBook implements ShouldBroadcast
         info('broad with');
         return [
             'message' => 'Sách mới đã được thêm!',
-            ''
         ];
     }
 }

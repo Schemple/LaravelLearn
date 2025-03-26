@@ -6,18 +6,18 @@
             @csrf
             <div class="space-y-12">
                 <div class="border-b border-gray-900/10 pb-12">
-                    <h2 class="text-base/7 font-semibold text-gray-900">Add New Book's Information</h2>
-                    <p class="mt-1 text-sm/6 text-gray-600">Fill in every input below</p>
+                    <h2 class="text-base/7 font-semibold text-gray-900">Thêm thông tin sách</h2>
+                    <p class="mt-1 text-sm/6 text-gray-600">Điền vào biểu mẫu dưới đây</p>
 
                     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div class="sm:col-span-full">
-                            <label for="title" class="block text-sm/6 font-medium text-gray-900">Title</label>
+                            <label for="title" class="block text-sm/6 font-medium text-gray-900">Tiêu đề</label>
                             <div class="mt-2">
                                 <div
                                     class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
                                     <input type="text" name="title" id="title"
                                            class="rounded-md bg-gray-50 block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
-                                           placeholder="Book's title">
+                                           placeholder="Tiêu đề sách">
                                 </div>
                                 @error('title')
                                 <p class="mt-1 text-sm text-red-500" id="error-message">{{ $message }}</p>
@@ -26,13 +26,13 @@
                         </div>
 
                         <div class="sm:col-span-full">
-                            <label for="author" class="block text-sm/6 font-medium text-gray-900">Author</label>
+                            <label for="author" class="block text-sm/6 font-medium text-gray-900">Tác giả</label>
                             <div class="mt-2">
                                 <div
                                     class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
                                     <input type="text" name="author" id="author"
                                            class="rounded-md bg-gray-50 block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
-                                           placeholder="Book's author">
+                                           placeholder="Tác giả">
                                 </div>
                                 @error('author')
                                 <p class="mt-1 text-sm text-red-500" id="error-message">{{ $message }}</p>
@@ -41,14 +41,13 @@
                         </div>
 
                         <div class="sm:col-span-full">
-                            <label for="published_year" class="block text-sm/6 font-medium text-gray-900">Published
-                                Year</label>
+                            <label for="published_year" class="block text-sm/6 font-medium text-gray-900">Năm xuất bản</label>
                             <div class="mt-2">
                                 <div
                                     class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
                                     <input type="text" name="published_year" id="published_year"
                                            class="rounded-md bg-gray-50 block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
-                                           placeholder="Book published year">
+                                           placeholder="Năm xuất bản">
                                 </div>
                                 @error('published_year')
                                 <p class="mt-1 text-sm text-red-500" id="error-message">{{ $message }}</p>
@@ -57,7 +56,7 @@
                         </div>
 
                         <div class="sm:col-span-full">
-                            <label for="stock" class="block text-sm/6 font-medium text-gray-900">Stock</label>
+                            <label for="stock" class="block text-sm/6 font-medium text-gray-900">Số lượng</label>
                             <div class="mt-2">
                                 <div
                                     class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
@@ -72,14 +71,13 @@
                         </div>
 
                         <div class="col-span-full">
-                            <label for="cover-photo" class="block text-sm/6 font-medium text-gray-900">Cover photo</label>
+                            <label for="cover-photo" class="block text-sm/6 font-medium text-gray-900">Ảnh bìa</label>
                             <div id="drop-zone"
                                  class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                                 <div class="col-span-full text-center">
                                     <img id="preview-image" class="hidden mb-4 rounded-lg w-40 h-40 object-cover"
                                          alt="Preview Image">
-                                    <p id="preview-message" class="hidden mt-1 text-sm text-gray-300">Drag your image here
-                                        to change cover</p>
+                                    <p id="preview-message" class="hidden mt-1 text-sm text-gray-300">Kéo ảnh khác vào đây nếu bạn muốn thay đổi bìa</p>
                                 </div>
                                 <div id="upload-icon" class="text-center">
                                     <svg class="mx-auto size-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor"
@@ -91,10 +89,10 @@
                                     <div class="mt-4 flex text-sm/6 text-gray-600">
                                         <label for="cover"
                                                class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 focus-within:outline-hidden hover:text-indigo-500">
-                                            <span>Upload a file</span>
+                                            <span>Tải ảnh lên </span>
                                             <input id="cover" name="cover" type="file" class="sr-only">
                                         </label>
-                                        <p class="pl-1">or drag and drop</p>
+                                        <p class="pl-1">hoặc kéo thả ảnh vào đây</p>
                                     </div>
                                     <p class="text-xs/5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
                                 </div>
@@ -117,7 +115,7 @@
             </div>
         </form>
     </div>
-    {{--    @vite('resources/js/app.js')--}}
+        @vite('resources/js/app.js')
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let dropZone = document.getElementById("drop-zone");
@@ -126,19 +124,19 @@
             let previewMessage = document.getElementById("preview-message");
             let uploadIcon = document.getElementById("upload-icon");
 
-            // setTimeout(() => {
-            //     if (window.Echo) {
-            //         console.log("✅ Echo is now ready!");
-            //
-            //         window.Echo.channel('testChannel')
-            //             .listen('testingEvent', (e) => {
-            //                 console.log("Received event:", e);
-            //             });
-            //
-            //     } else {
-            //         console.error("❌ Echo is NOT ready!");
-            //     }
-            // }, 2000);
+            setTimeout(() => {
+                if (window.Echo) {
+                    console.log("✅ Echo is now ready!");
+
+                    window.Echo.channel('notify')
+                        .listen('new.Book', (e) => {
+                            console.log("Received event:", e);
+                        });
+
+                } else {
+                    console.error("❌ Echo is NOT ready!");
+                }
+            }, 2000);
 
             // Ngăn chặn hành vi mặc định của trình duyệt khi kéo thả
             dropZone.addEventListener("dragover", function (e) {

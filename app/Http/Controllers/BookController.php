@@ -53,6 +53,13 @@ class BookController extends Controller
         return redirect()->route('404');
     }
 
+    public function store(StoreBookRequest $request)
+    {
+        $data = $request->validatedWithImage();
+        dispatch(new AddBook($data));
+        return back()->with('success', 'Nhập dữ liệu sách thành công!');
+    }
+
     public function add()
     {
         return view('books.add');

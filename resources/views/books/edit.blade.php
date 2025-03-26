@@ -47,7 +47,7 @@
                                     class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
                                     <input type="text" name="published_year" id="published_year"
                                            class="rounded-md bg-gray-50 block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
-                                           placeholder="Năm xuất " value="{{ $book['published_year'] }}">
+                                           placeholder="Năm xuất bản" value="{{ $book['published_year'] }}">
                                 </div>
                                 @error('published_year')
                                 <p class="mt-1 text-sm text-red-500" id="error-message">{{ $message }}</p>
