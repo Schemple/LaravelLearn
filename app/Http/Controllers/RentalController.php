@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rental;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\ProcessRentalOrder;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\RentalImport;
-use App\Http\Controllers\RentalDetailController;
 
 class RentalController extends Controller
 {
@@ -19,12 +17,12 @@ class RentalController extends Controller
 //        Excel::import(new RentalImport, 'orders.xlsx');
         $collection = Excel::toCollection(new RentalImport, 'orders.xlsx');
         dd($collection);
-//        return redirect('/')->with('success', 'All good!');
     }
 
-    public static function rentedBooks()
+    public static function activeRentalNum()
     {
-        return null;
+        $activeRental = Rental::where('status', 'ongoing')->orWhere('status', 'overdue')->count();
+        return $activeRental;
     }
     public function all()
     {
@@ -50,5 +48,17 @@ class RentalController extends Controller
         ]);
         ProcessRentalOrder::dispatch($data);
         return response()->json(['message' => 'Đơn thuê sách đã được tiếp nhận xử lý'], 201);
+    }
+
+    public function getBooks($id)
+    {
+        $rental = Rental::find($id);
+        $rental_detail = $rental->rental_detail;
+        $books = [];
+        foreach ($rental_detail as $detail){
+            $books[] = $detail->book;
+        }
+
+        return response()->json($books);
     }
 }

@@ -4,14 +4,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RentalController;
+use App\Http\Controllers\RentalDetailController;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\RentalExport;
 
+Route::get('/test', [RentalController::class, 'activeRentalNum']);
 
 Route::get('/', function () {
-    $totalBooks = BookController::totalBooks();
+    $activeRentalNum = RentalController::activeRentalNum();
+    $rentedBookNum = RentalDetailController::rentedBookNum();
     return view('dashboard.index', [
-        'totalBooks' => $totalBooks,
+        'activeRentalNum' => $activeRentalNum,
+        'rentedBooksNum' => $rentedBookNum,
     ]);
 })->name('home');
 

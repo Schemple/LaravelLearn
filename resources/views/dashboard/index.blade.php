@@ -7,12 +7,12 @@
         <h2 class="text-2xl font-bold mb-4">Thống Kê Tổng Quan</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div class="bg-white p-4 rounded-lg shadow">
-                <h3 class="text-xl font-semibold">Sách Hiện Có</h3>
-                <p class="text-2xl">{{ $totalBooks }}</p>
+                <h3 class="text-xl font-semibold">Đơn thuê chưa hoàn trả</h3>
+                <p class="text-2xl">{{ $activeRentalNum }}</p>
             </div>
             <div class="bg-white p-4 rounded-lg shadow">
                 <h3 class="text-xl font-semibold">Sách Đang Cho Thuê</h3>
-                <p class="text-2xl">5003</p>
+                <p class="text-2xl">{{ $rentedBooksNum }}</p>
             </div>
             <div class="bg-white p-4 rounded-lg shadow">
                 <h3 class="text-xl font-semibold">Doanh Thu Hàng Tháng</h3>

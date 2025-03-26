@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Events\NewRental;
-use App\Events\RentalDelete;
 use App\Observers\RentalObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,18 +16,19 @@ class Rental extends Model
     protected $fillable = ['user_id', 'customer_id', 'rental_date', 'due_date', 'return_date', 'status'];
     protected $dispatchesEvents = [
         'created' => NewRental::class,
-        'deleted' => RentalDelete::class,
+//        'deleted' => RentalDelete::class,
     ];
-
 
     public function customer()
     {
         return $this->belongsTo(Customer::class);
     }
+
     public function book()
     {
         return $this->belongsTo(Book::class);
     }
+
     public function rental_detail()
     {
         return $this->hasMany(RentalDetail::class);
