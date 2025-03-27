@@ -11,16 +11,18 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class NewBook implements ShouldBroadcast
+class BookCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+    public Book $book;
     public $message;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($message)
+    public function __construct(Book $book, $message)
     {
+        $this->book = $book;
         if ($message) {
             $this->message = $message;
         }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->year("published_year");
             $table->integer("stock")->default(0);
             $table->string('cover')->nullable();
+//            $table->integer('price')->default(30);
             $table->timestamps();
         });
     }

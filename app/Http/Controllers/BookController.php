@@ -2,25 +2,56 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\NewBook;
 use App\Http\Requests\StoreBookRequest;
 use App\Imports\BookImport;
-use App\Jobs\AddBook;
-use App\Models\Book;
+use App\Services\BookService;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class BookController extends Controller
 {
-    public function viewEdit($id){
-        $book = Book::find($id);
-        if ($book){
-            return view('books.edit',compact('book'));
+    private BookService $bookService;
+
+    public function __construct(BookService $bookService)
+    {
+        $this->bookService = $bookService;
+    }
+
+    public function index()
+    {
+        $totalBooks = $this->bookService->countBook();
+        $books = $this->bookService->getAllBooks()->take(10);
+        return view('books.index', [
+            'totalBooks' => $totalBooks,
+            'books' => $books
+        ]);
+    }
+
+    public function viewEdit($id)
+    {
+        $book = $this->bookService->getBookById($id);
+        if ($book) {
+            return view('books.edit', compact('book'));
         }
         return view('404');
     }
 
-    public function importExcel(Request $request)
+    public function update(StoreBookRequest $request, $id)
+    {
+        $data = $request->validatedWithImage();
+        $update = $this->bookService->updateBook($id, $data);
+        if ($update) {
+            return redirect()->route('book.index')->with('success', 'Cập nhật thông tin sách thành công!');
+        }
+        return redirect()->route('book.index')->with('failed', 'Đã xảy ra lỗi, vui lòng thử lại sau.');
+    }
+
+    public function viewImport()
+    {
+        return view('books.import');
+    }
+
+    public function import(Request $request)
     {
         $request->validate([
             'file' => 'required|mimes:xls,xlsx|max:2048',
@@ -33,45 +64,31 @@ class BookController extends Controller
         }
     }
 
-    public function viewImport()
-    {
-        return view('books.import');
-    }
-
-    public static function totalBooks()
-    {
-        $totalBooks = Book::sum('stock');
-        return $totalBooks;
-    }
-
     public function viewOne($id)
     {
-        $book = Book::find($id);
+        $book = $this->bookService->getBookById($id);
         if ($book) {
-            return view('books.show', ['book' => $book]);
+            return view('books.show', compact('book'));
         }
         return redirect()->route('404');
     }
-
-    public function store(StoreBookRequest $request)
-    {
-        $data = $request->validatedWithImage();
-        dispatch(new AddBook($data));
-        return back()->with('success', 'Nhập dữ liệu sách thành công!');
-    }
-
-    public function add()
+    public function viewAdd()
     {
         return view('books.add');
     }
 
-    public function index()
+    public function add(StoreBookRequest $request)
     {
-        $totalBooks = Book::count();
-        $books = Book::all()->take(10);
-        return view('books.index', [
-            'totalBooks' => $totalBooks,
-            'books' => $books
-        ]);
+        $data = $request->validatedWithImage();
+        $create = $this->bookService->createBook($data);
+        if ($create) {
+            return back()->with('success', 'Nhập dữ liệu sách thành công!');
+        }
+        return back()->with('error', 'Có lỗi xảy ra! Xin vui lòng thử lại.');
+    }
+
+    public function delete($id)
+    {
+        return "In progress";
     }
 }

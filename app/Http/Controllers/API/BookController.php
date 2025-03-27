@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Events\NewBook;
+use App\Events\BookCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBookRequest;
 use App\Jobs\AddBook;

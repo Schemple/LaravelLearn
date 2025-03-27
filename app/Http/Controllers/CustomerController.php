@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
+use App\Services\CustomerService;
+use App\Services\RentalService;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
+    private CustomerService $customerService;
+    private RentalService $rentalService;
+    public function __construct(CustomerService $customerService, RentalService $rentalService)
+    {
+        $this->customerService = $customerService;
+        $this->rentalService = $rentalService;
+    }
     public function all()
     {
-        return response()->json(Customer::all());
+        return $this->customerService->getAll();
     }
 
-    public function rentals($id)
-    {
-        return response()->json(Customer::find($id)->rentals);
-    }
+//    public function getRentals($id)
+//    {
+//        return $this->rentalService->getRentals($id);
+//    }
 }

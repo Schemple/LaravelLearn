@@ -4,32 +4,24 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RentalController;
-use App\Http\Controllers\RentalDetailController;
+use App\Http\Controllers\DashboardController;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\RentalExport;
 
-Route::get('/test', [RentalController::class, 'activeRentalNum']);
+Route::get('/test', [DashboardController::class, 'test']);
 
-Route::get('/', function () {
-    $activeRentalNum = RentalController::activeRentalNum();
-    $rentedBookNum = RentalDetailController::rentedBookNum();
-    return view('dashboard.index', [
-        'activeRentalNum' => $activeRentalNum,
-        'rentedBooksNum' => $rentedBookNum,
-    ]);
-})->name('home');
+Route::get('/', [DashboardController::class, 'index'])->name('home');
 
 Route::prefix('book')->group(function() {
     Route::get('/', [BookController::class, 'index'])->name('book.index');
     Route::get('/import', [BookController::class, 'viewImport'])->name('book.import');
-    Route::post('/import', [BookController::class, 'importExcel']);
-    Route::get('/add', [BookController::class, 'add'])->name('book.add');
-    Route::post('/add', [BookController::class, 'store']);
+    Route::post('/import', [BookController::class, 'import']);
+    Route::get('/add', [BookController::class, 'viewAdd'])->name('book.add');
+    Route::post('/add', [BookController::class, 'add']);
     Route::get('/{id}', [BookController::class, 'viewOne'])->name('book.show');
     Route::get('/{id}/edit', [BookController::class, 'viewEdit'])->name('book.edit');
-    Route::post('/{id}/edit', [BookController::class, 'update'])->name('book.update');
-
-    Route::get('/{id}/delete', [BookController::class, 'viewDelete'])->name('book.destroy');
+    Route::put('/{id}/edit', [BookController::class, 'update'])->name('book.update');
+    Route::get('/{id}/delete', [BookController::class, 'delete'])->name('book.destroy');
 });
 
 Route::prefix('customer')->group(function() {

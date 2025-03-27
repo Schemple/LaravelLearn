@@ -2,8 +2,9 @@
 @section('title', 'Chỉnh sửa thông tin sách')
 @section('content')
     <div class="max-w-5xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
-        <form method="PUT" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
             <div class="space-y-12">
                 <div class="border-b border-gray-900/10 pb-12">
                     <h2 class="text-base/7 font-semibold text-gray-900">Chỉnh sửa thông tin sách</h2>

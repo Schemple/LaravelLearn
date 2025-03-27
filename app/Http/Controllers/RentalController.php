@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rental;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\ProcessRentalOrder;
 use Maatwebsite\Excel\Facades\Excel;
@@ -12,31 +10,13 @@ use App\Imports\RentalImport;
 
 class RentalController extends Controller
 {
-    public function import()
-    {
+
+//    public function import()
+//    {
 //        Excel::import(new RentalImport, 'orders.xlsx');
-        $collection = Excel::toCollection(new RentalImport, 'orders.xlsx');
-        dd($collection);
-    }
-
-    public static function activeRentalNum()
-    {
-        $activeRental = Rental::where('status', 'ongoing')->orWhere('status', 'overdue')->count();
-        return $activeRental;
-    }
-    public function all()
-    {
-//        $today = Carbon::today();
-        $today = now();
-
-//        $data = DB::table('rentals')->where('status', 'ongoing')->get();
-
-        $data = Rental::whereDate('rental_date', $today)->count();
-//        $data = DB::table('rentals')->where('status', 'ongoing')
-//            ->whereDate('due_date', '<', $today)
-//            ->update(['status'=>'overdue']);
-        return response()->json($data);
-    }
+//        $collection = Excel::toCollection(new RentalImport, 'orders.xlsx');
+//        dd($collection);
+//    }
 
     public function create(Request $request)
     {
@@ -48,17 +28,5 @@ class RentalController extends Controller
         ]);
         ProcessRentalOrder::dispatch($data);
         return response()->json(['message' => 'Đơn thuê sách đã được tiếp nhận xử lý'], 201);
-    }
-
-    public function getBooks($id)
-    {
-        $rental = Rental::find($id);
-        $rental_detail = $rental->rental_detail;
-        $books = [];
-        foreach ($rental_detail as $detail){
-            $books[] = $detail->book;
-        }
-
-        return response()->json($books);
     }
 }
