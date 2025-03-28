@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\BookService;
 use App\Services\CustomerService;
 use App\Services\RentalService;
-use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -20,7 +18,8 @@ class DashboardController extends Controller
 
     public function test()
     {
-        return response()->json($this->rentalService->all());
+//        return response()->json($this->rentalService->all());
+        return $this->rentalService->countActive();
     }
 
     public function index()
@@ -28,7 +27,7 @@ class DashboardController extends Controller
         $rentalNum = $this->rentalService->count();
         $activeRentalNum = $this->rentalService->countActive();
         $customerNum = $this->customerService->count();
-        $rentals = $this->rentalService->all();
+        $rentals = $this->rentalService->getDashboardInfo();
 
         return view('dashboard.index', [
             'activeRentalNum' => $activeRentalNum,

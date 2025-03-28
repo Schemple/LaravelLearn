@@ -3,60 +3,35 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\Customer;
-use App\Models\Rental;
 use App\Repositories\Interfaces\CustomerRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 
-class CustomerRepository implements CustomerRepositoryInterface
+class CustomerRepository extends BaseRepository implements CustomerRepositoryInterface
 {
-    protected $customer;
-
-    /**
-     * Create a new class instance.
-     */
-    public function __construct(Customer $customer)
+    public function model()
     {
-        $this->customer = $customer;
+        return Customer::class;
     }
 
-    public function getAll(): Collection
+    public function boot()
     {
-        return $this->customer::all();
+        $this->pushCriteria(app(RequestCriteria::class));
     }
 
-
-    public function create(array $data): Customer
+    public function getById($id): Collection
     {
-        return $this->customer::create($data);
+        return $this->find($id);
     }
 
-    public function update(int $id, array $data): bool
+    public function getByPhone($phonenumber): Collection
     {
-        return $this->customer::where('id', $id)->update($data);
+        return $this->findByField('phone', $phonenumber);
     }
 
-    public function delete(int $id): bool
+    public function getByEmail($email): Collection
     {
-        return $this->customer::destroy($id);
-    }
-
-    public function getById(int $id): ?Customer
-    {
-        return $this->customer::find($id);
-    }
-
-    public function getByPhone($phonenumber): ?Customer
-    {
-        return $this->customer::where('phone', $phonenumber)->get();
-    }
-
-    public function getByEmail($email): ?Customer
-    {
-        return $this->customer::where('email', $email)->get();
-    }
-
-    public function count(): int
-    {
-        return $this->customer::count();
+        return $this->findByField('email', $email);
     }
 }

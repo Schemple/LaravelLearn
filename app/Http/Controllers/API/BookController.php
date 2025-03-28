@@ -2,20 +2,26 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Events\BookCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBookRequest;
 use App\Jobs\AddBook;
 use App\Models\Book;
+use App\Services\BookService;
 
 class BookController extends Controller
 {
+    private BookService $bookService;
+    public function __construct(BookService $bookService)
+    {
+        $this->bookService = $bookService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return response()->json(Book::all(), 200);
+        $book = $this->bookService->getAllBooks();
+        return response()->json($book, 200);
     }
 
     /**

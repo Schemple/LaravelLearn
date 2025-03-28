@@ -19,10 +19,9 @@ class BookService
     public function getAllBooks(): Collection
     {
         try {
-
-            return $this->bookRepository->getAll();
+            return $this->bookRepository->all();
         } catch (\Exception $e) {
-            Log::error('Lỗi truy vấn sách: ' . $e->getMessage());
+            Log::error($e->getMessage());
             return new Collection([]);
         }
     }
@@ -30,9 +29,9 @@ class BookService
     public function getBookById(int $id)
     {
         try {
-            return $this->bookRepository->getById($id);
+            return $this->bookRepository->find($id);
         } catch (\Exception $e) {
-            Log::error('Lỗi truy vấn sách:' . $e->getMessage());
+            Log::error($e->getMessage());
             return false;
         }
     }
@@ -45,7 +44,7 @@ class BookService
             event(new BookCreated($book, "Thêm sách thành công"));
             return $book;
         } catch (\Exception $e) {
-            Log::error('Lỗi tạo sách: ' . $e->getMessage());
+            Log::error($e->getMessage());
             return false;
         }
     }
@@ -53,9 +52,9 @@ class BookService
     public function updateBook(int $id, array $data)
     {
         try {
-            return $this->bookRepository->update($id, $data);
+            return $this->bookRepository->update($data, $id);
         } catch (\Exception $e) {
-            Log::error('Lỗi cập nhật sách: ' . $e->getMessage());
+            Log::error($e->getMessage());
             return false;
         }
     }
@@ -65,18 +64,28 @@ class BookService
         try {
             return $this->bookRepository->delete($id);
         } catch (\Exception $e) {
-            Log::error('Lỗi xóa sách: ' . $e->getMessage());
+            Log::error($e->getMessage());
             return false;
         }
     }
 
     public function countBook(): int
     {
-        return $this->bookRepository->count();
+        try{
+            return $this->bookRepository->count();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return false;
+        }
     }
 
     public function totalStock(): int
     {
-        return $this->bookRepository->totalStock();
+        try{
+            return $this->bookRepository->totalStock();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return false;
+        }
     }
 }

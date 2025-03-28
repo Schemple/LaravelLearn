@@ -8,6 +8,8 @@ use App\Repositories\Eloquent\RentalRepository;
 use App\Repositories\Interfaces\BookRepositoryInterface;
 use App\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Repositories\Interfaces\RentalRepositoryInterface;
+use App\Repositories\TestRepository;
+use App\Repositories\TestRepositoryEloquent;
 use App\Services\BookService;
 use App\Services\CustomerService;
 use App\Services\RentalService;
@@ -28,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BookRepositoryInterface::class, BookRepository::class);
         $this->app->bind(CustomerRepositoryInterface::class, CustomerRepository::class);
         $this->app->bind(RentalRepositoryInterface::class, RentalRepository::class);
+        $this->app->bind(TestRepository::class, TestRepositoryEloquent::class);
 
         $this->app->singleton(BookService::class, function ($app) {
             return new BookService($app->make(BookRepositoryInterface::class));

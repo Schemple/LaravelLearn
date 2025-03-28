@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Rental;
 use App\Repositories\Interfaces\RentalRepositoryInterface;
+use Illuminate\Support\Facades\Log;
 
 class RentalService
 {
@@ -18,21 +20,71 @@ class RentalService
 
     public function all()
     {
-        return $this->rentalRepository->getAll();
+        try{
+            return $this->rentalRepository->all();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return false;
+        }
+    }
+
+    public function create(array $data)
+    {
+        try{
+            return $this->rentalRepository->create($data);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return false;
+        }
+    }
+
+    public function update(array $data, int $id)
+    {
+        try{
+            return $this->rentalRepository->update($data, $id);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return false;
+        }
+    }
+
+    public function delete(int $id)
+    {
+        try{
+            return $this->rentalRepository->delete($id);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return false;
+        }
+    }
+
+    public function getDashboardInfo()
+    {
+        try{
+            return $this->rentalRepository->getDashboardInfo();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return false;
+        }
     }
 
     public function count()
     {
-        return $this->rentalRepository->count();
+        try{
+            return $this->rentalRepository->count();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return false;
+        }
     }
 
     public function countActive()
     {
-        return $this->rentalRepository->countActive();
-    }
-
-    public function getByCustomerId($user_id)
-    {
-        return $this->rentalRepository->getByCustomerId($user_id);
+        try{
+            return $this->rentalRepository->countActive();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return false;
+        }
     }
 }

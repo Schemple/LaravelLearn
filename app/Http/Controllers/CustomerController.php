@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Services\CustomerService;
 use App\Services\RentalService;
-use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
@@ -20,8 +19,8 @@ class CustomerController extends Controller
         return $this->customerService->getAll();
     }
 
-//    public function getRentals($id)
-//    {
-//        return $this->rentalService->getRentals($id);
-//    }
+    public function test()
+    {
+        return $this->customerService->getByPhone('1-252-934-9234');
+    }
 }

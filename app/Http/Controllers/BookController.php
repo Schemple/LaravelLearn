@@ -72,6 +72,7 @@ class BookController extends Controller
         }
         return redirect()->route('404');
     }
+
     public function viewAdd()
     {
         return view('books.add');
@@ -89,6 +90,10 @@ class BookController extends Controller
 
     public function delete($id)
     {
-        return "In progress";
+        $delete = $this->bookService->deleteBook($id);
+        if ($delete) {
+            return redirect()->route('book.index')->with('success', 'Xóa sách thành công!');
+        }
+        return back()->with('error', 'Có lỗi xảy ra! Xin vui lòng thử lại.');
     }
 }

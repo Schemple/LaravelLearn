@@ -5,10 +5,11 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TestController;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\RentalExport;
 
-Route::get('/test', [DashboardController::class, 'test']);
+Route::get('/test', [CustomerController::class, 'test']);
 
 Route::get('/', [DashboardController::class, 'index'])->name('home');
 
@@ -21,7 +22,7 @@ Route::prefix('book')->group(function() {
     Route::get('/{id}', [BookController::class, 'viewOne'])->name('book.show');
     Route::get('/{id}/edit', [BookController::class, 'viewEdit'])->name('book.edit');
     Route::put('/{id}/edit', [BookController::class, 'update'])->name('book.update');
-    Route::get('/{id}/delete', [BookController::class, 'delete'])->name('book.destroy');
+    Route::delete('/{id}/delete', [BookController::class, 'delete'])->name('book.destroy');
 });
 
 Route::prefix('customer')->group(function() {

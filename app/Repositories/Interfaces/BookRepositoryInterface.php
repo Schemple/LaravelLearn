@@ -1,18 +1,8 @@
 <?php
 namespace App\Repositories\Interfaces;
 
-use App\Models\Book;
-use Illuminate\Database\Eloquent\Collection;
+use Prettus\Repository\Contracts\RepositoryInterface;
 
-interface BookRepositoryInterface
+interface BookRepositoryInterface extends RepositoryInterface
 {
-    public function getAll(): Collection;
-
-    public function getById(int $id): ?Book;
-
-    public function create(array $data): Book;
-
-    public function update(int $id, array $data): bool;
-
-    public function delete(int $id): bool;
 }

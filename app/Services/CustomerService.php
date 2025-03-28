@@ -19,16 +19,21 @@ class CustomerService
     public function getAll()
     {
         try {
-            return $this->customerRepository->getAll();
+            return $this->customerRepository->all();
         } catch (\Exception $e) {
-            Log::error('Lỗi truy xuất dữ liệu người dùng' . $e->getMessage());
+            Log::error($e->getMessage());
             return false;
         }
     }
 
     public function count()
     {
-        return $this->customerRepository->count();
+        try{
+            return $this->customerRepository->count();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return false;
+        }
     }
 
     public function getById($id)
@@ -36,10 +41,18 @@ class CustomerService
         try{
            return $this->customerRepository->getById($id);
         } catch (\Exception $e) {
-            Log::error('Lỗi truy xuất dữ liệu người dùng theo ID' . $e->getMessage());
+            Log::error($e->getMessage());
             return false;
         }
     }
 
-
+    public function getByPhone($phone)
+    {
+        try{
+            return $this->customerRepository->getByPhone($phone);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return false;
+        }
+    }
 }

@@ -7,11 +7,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Models\Rental;
-
+use App\Services\RentalService;
 class ProcessRentalOrder implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    private RentalService $rentalService;
     protected $rentalData;
 
     /**
@@ -25,8 +25,9 @@ class ProcessRentalOrder implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle(RentalService $rentalService): void
     {
-        Rental::create($this->rentalData);
+        info('a');
+        $rentalService->create($this->rentalData);
     }
 }

@@ -5,21 +5,32 @@ namespace App\Repositories\Eloquent;
 use App\Models\Rental;
 use App\Repositories\Interfaces\RentalRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 
-class RentalRepository implements RentalRepositoryInterface
+class RentalRepository extends BaseRepository implements RentalRepositoryInterface
 {
-    protected $rental;
     /**
-     * Create a new class instance.
+     * Specify Model class name
+     *
+     * @return string
      */
-    public function __construct(Rental $rental)
+    public function model()
     {
-        $this->rental = $rental;
+        return Rental::class;
     }
 
-    public function getAll(): Collection
+    /**
+     * Boot up the repository, pushing criteria
+     */
+    public function boot()
     {
-        $rentals = $this->rental::with(['customer', 'rental_detail.book'])
+        $this->pushCriteria(app(RequestCriteria::class));
+    }
+
+    public function getDashboardInfo(): Collection
+    {
+        $rentals = $this->model()::with(['customer', 'rental_detail.book'])
             ->get()
             ->flatMap(function ($rental) {
                 return $rental->rental_detail->map(function ($detail) use ($rental) {
@@ -36,51 +47,11 @@ class RentalRepository implements RentalRepositoryInterface
         return new Collection($rentals);
     }
 
-    public function create($data): Rental
-    {
-        return $this->rental::create($data);
-    }
-
-    public function update(int $id, array $data): bool
-    {
-        return $this->rental::where('id', $id)->update($data);
-    }
-
-    public function delete(int $id): bool
-    {
-        return $this->rental::destroy($id);
-    }
-
-    public function getById(int $id): ?Rental
-    {
-        return $this->rental::find($id);
-    }
-
-    public function getByUserId(int $id): Collection
-    {
-//        Rental::with('book')->where('user_id', $userId)->latest()->limit(5)->get();
-        return $this->rental::with('book')->where('user_id', $id)->get();
-    }
-
-    public function getByCustomerId(int $id): Collection
-    {
-//        Rental::with('book')->where('customer_id', $id)->latest()->limit(5)->get();
-        return $this->rental::with('book')->where('customer_id', $id)->get();
-    }
-
-    public function getByStatus($status): Collection
-    {
-        return $this->rental::where('status', $status)->get();
-    }
-
-    public function count():int
-    {
-        return $this->rental::count();
-    }
-
     public function countActive(): int
     {
-        return $this->rental::where('status', 'ongoing')->orWhere('status', 'overdue')->count();
+        return $this->count(['status' => 'ongoing'])
+            + $this->count(['status' => 'overdue']);
     }
+
 }
 
