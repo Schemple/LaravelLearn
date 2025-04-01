@@ -28,7 +28,7 @@ class RentalRepository extends BaseRepository implements RentalRepositoryInterfa
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
-    public function getDashboardInfo(): Collection
+    public function getRentalDetails(): Collection
     {
         $rentals = $this->model()::with(['customer', 'rental_detail.book'])
             ->get()
@@ -53,5 +53,24 @@ class RentalRepository extends BaseRepository implements RentalRepositoryInterfa
             + $this->count(['status' => 'overdue']);
     }
 
+    public function getDetailsByCustomerId($id): Collection
+    {
+        $rentals = $this->model()::with(['customer', 'rental_detail.book'])
+            ->where('customer_id', $id)
+            ->get()
+            ->flatMap(function ($rental) {
+                return $rental->rental_detail->map(function ($detail) use ($rental) {
+                    return [
+                        'customer_name' => $rental->customer->name,
+                        'book_title' => $detail->book->title,
+                        'status' => $rental->status,
+                        'rental_date' => $rental->rental_date,
+                        'due_date' => $rental->due_date,
+                    ];
+                });
+            });
+
+        return new Collection($rentals);
+    }
 }
 

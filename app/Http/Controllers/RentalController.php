@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\RentalService;
 use Illuminate\Http\Request;
 use App\Jobs\ProcessRentalOrder;
 use Maatwebsite\Excel\Facades\Excel;
@@ -9,6 +10,15 @@ use App\Imports\RentalImport;
 
 class RentalController extends Controller
 {
+    private RentalService $rentalService;
+    public function __construct(RentalService $rentalService)
+    {
+        $this->rentalService = $rentalService;
+    }
+    public function all()
+    {
+        return $this->rentalService->all();
+    }
 
     public function import()
     {

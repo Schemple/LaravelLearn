@@ -5,7 +5,6 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\TestController;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\RentalExport;
 
@@ -13,16 +12,18 @@ Route::get('/test', [CustomerController::class, 'test']);
 
 Route::get('/', [DashboardController::class, 'index'])->name('home');
 
-Route::prefix('book')->group(function() {
-    Route::get('/', [BookController::class, 'index'])->name('book.index');
-    Route::get('/import', [BookController::class, 'viewImport'])->name('book.import');
-    Route::post('/import', [BookController::class, 'import']);
-    Route::get('/add', [BookController::class, 'viewAdd'])->name('book.add');
-    Route::post('/add', [BookController::class, 'add']);
-    Route::get('/{id}', [BookController::class, 'viewOne'])->name('book.show');
-    Route::get('/{id}/edit', [BookController::class, 'viewEdit'])->name('book.edit');
-    Route::put('/{id}/edit', [BookController::class, 'update'])->name('book.update');
-    Route::delete('/{id}/delete', [BookController::class, 'delete'])->name('book.destroy');
+Route::controller(BookController::class)->group(function () {
+    Route::prefix('book')->group(function() {
+        Route::get('/', 'index')->name('book.index');
+        Route::get('/import', 'viewImport')->name('book.import');
+        Route::post('/import', 'import');
+        Route::get('/add', 'viewAdd')->name('book.add');
+        Route::post('/add', 'add');
+        Route::get('/{id}', 'viewOne')->name('book.show');
+        Route::get('/{id}/edit', 'viewEdit')->name('book.edit');
+        Route::put('/{id}/edit', 'update')->name('book.update');
+        Route::delete('/{id}/delete', 'delete')->name('book.destroy');
+    });
 });
 
 Route::prefix('customer')->group(function() {
@@ -41,6 +42,4 @@ Route::get('/export', function () {
 Route::get('/import', [RentalController::class, 'import'])->name('import');
 
 
-Route::get('/404', function() {
-    return view('404');
-})->name('404');
+Route::view('/404', '404')->name('404');

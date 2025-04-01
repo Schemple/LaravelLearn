@@ -27,7 +27,7 @@ class DashboardController extends Controller
         $rentalNum = $this->rentalService->count();
         $activeRentalNum = $this->rentalService->countActive();
         $customerNum = $this->customerService->count();
-        $rentals = $this->rentalService->getDashboardInfo();
+        $rentals = $this->rentalService->getRentalDetails();
 
         return view('dashboard.index', [
             'activeRentalNum' => $activeRentalNum,

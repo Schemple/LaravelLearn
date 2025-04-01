@@ -58,10 +58,10 @@ class RentalService
         }
     }
 
-    public function getDashboardInfo()
+    public function getRentalDetails()
     {
         try{
-            return $this->rentalRepository->getDashboardInfo();
+            return $this->rentalRepository->getRentalDetails();
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return false;
@@ -86,5 +86,10 @@ class RentalService
             Log::error($e->getMessage());
             return false;
         }
+    }
+
+    public function getDetailByCustomerId(int $customerId)
+    {
+        return $this->rentalRepository->getDetailsByCustomerId($customerId);
     }
 }

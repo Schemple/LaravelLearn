@@ -23,4 +23,9 @@ class CustomerController extends Controller
     {
         return $this->customerService->getByPhone('1-252-934-9234');
     }
+
+    public function rentals($id)
+    {
+        return $this->rentalService->getDetailByCustomerId($id);
+    }
 }
